@@ -1,14 +1,13 @@
 import pygame
-from cores import cor
-from personagens import per
+from material.cores import cor
+from material.personagens import jovem
 from pygame.locals import *
-from random import randint
 
 pygame.init()
 
 janela = pygame.display.set_mode((500, 400))
 
-person = per.jovem[0][0]
+person = jovem.jovem[0][0]
 
 m, n = 0, 0
 
@@ -33,7 +32,7 @@ while aberto:
     janela.fill(cor.Wheat)
     janela.blit(person, (pos_x, pos_y))
 
-    person = per.jovem[m][n]
+    person = jovem.jovem[m][n]
 
 
     m = 3
