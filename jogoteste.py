@@ -1,53 +1,154 @@
 import pygame
 from material.cores import cor
-from material.personagens import jovem
+from material.personagens import jovem, estudante
 from pygame.locals import *
 
-pygame.init()
+def game():
+    pygame.init()
 
-janela = pygame.display.set_mode((500, 400))
+    largura = 500
+    altura = 400
 
-person = jovem.jovem[0][0]
-
-m, n = 0, 0
-
-pygame.display.set_caption("!!!!!!!!!!!!!!!!!!TESTE!!!!!!!!!!!!!!!!!")
-
-velocidade = 10
-pos_x = 0
-pos_y = 200
-
-aberto = True
-
-while aberto:
-    pygame.time.delay(50)
-
-    for event in pygame.event.get():
-        print(event)
-
-        if event.type == pygame.QUIT:
-            aberto = False
+    pos_x = largura/2
+    pos_y = altura/2
+    m, n = 0, 0
+    velocidade = 10
 
 
-    janela.fill(cor.Wheat)
-    janela.blit(person, (pos_x, pos_y))
+    janela = pygame.display.set_mode((largura, altura))
+    pygame.display.set_caption("IFgame")
 
-    person = jovem.jovem[m][n]
+    click = False
+
+    aberto = True
+
+    while aberto:
+        pygame.time.delay(50)
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                aberto = False
+
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+
+        comandos = pygame.key.get_pressed()
+
+        if comandos[pygame.K_DOWN]:
+            pos_y += velocidade
+            m = 0
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_UP]:
+            pos_y -= velocidade
+            m = 1
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_LEFT]:
+            pos_x -= velocidade
+            m = 2
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_RIGHT]:
+            pos_x += velocidade
+            m = 3
+            n += 1
+            if n > 3:
+                n = 0
 
 
-    m = 3
-    n += 1
 
-    if n > 2:
-        n = 0
+        if pos_x >= (largura + 10):
+            pos_x = -50
+        else:
+            if pos_x <= -50:
+                pos_x = (largura + 10)
 
-    pos_x += 10
+        if pos_y >= (altura + 10):
+            pos_y = -80
+        else:
+            if pos_y <= -80:
+                pos_y = (altura + 10)
 
-    if pos_x > 510:
-        pos_x = -50
+
+        voltar = pygame.Rect(50, 100, 200, 50)
+
+        mx, my = pygame.mouse.get_pos()
+
+        if voltar.collidepoint((mx, my)):
+            if click:
+                menu()
+
+        pygame.draw.rect(janela, cor.Preto, voltar)
+        janela.fill(cor.Azul_Brilhante)
+        janela.blit(estudante.estudante[m][n], (pos_x, pos_y))
+
+
+        pygame.display.update()
+
+    pygame.quit()
 
 
 
-    pygame.display.update()
 
-pygame.quit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,79 +1,84 @@
 import pygame
 from material.cores import cor
-from material.personagens import jovem
+from material.personagens import jovem, estudante
 from pygame.locals import *
 
-pygame.init()
+def game():
+    pygame.init()
 
-largura = 800
-altura = 500
+    largura = 500
+    altura = 400
 
-pos_x = largura/2
-pos_y = altura/2
-m, n = 0, 0
-velocidade = 10
-person = jovem.jovem[m][n]
-
-janela = pygame.display.set_mode((largura, altura))
-pygame.display.set_caption("IFgame")
-
-aberto = True
-
-while aberto:
-    pygame.time.delay(50)
-
-    for event in pygame.event.get():
-
-        if event.type == pygame.QUIT:
-            aberto = False
-
-    comandos = pygame.key.get_pressed()
-
-    if comandos[pygame.K_DOWN]:
-        pos_y += velocidade
-        person = jovem.jovem[0][n]
-        n += 1
-        if n > 3:
-            n = 0
-
-    if comandos[pygame.K_UP]:
-        pos_y -= velocidade
-        person = jovem.jovem[1][n]
-        n += 1
-        if n > 3:
-            n = 0
-
-    if comandos[pygame.K_LEFT]:
-        pos_x -= velocidade
-        person = jovem.jovem[2][n]
-        n += 1
-        if n > 3:
-            n = 0
-
-    if comandos[pygame.K_RIGHT]:
-        pos_x += velocidade
-        person = jovem.jovem[3][n]
-        n += 1
-        if n > 3:
-            n = 0
+    pos_x = largura/2
+    pos_y = altura/2
+    m, n = 0, 0
+    velocidade = 10
 
 
+    janela = pygame.display.set_mode((largura, altura))
+    pygame.display.set_caption("IFgame")
 
-    if pos_x >= (largura + 10):
-        pos_x = -50
-    else:
-        if pos_x <= -50:
-            pos_x = (largura + 10)
+    voltar = pygame.Surface((30, 15))
+    voltar.fill(cor.Violeta_Vermelho_Medio)
 
-    if pos_y >= (altura + 10):
-        pos_y = -80
-    else:
-        if pos_y <= -80:
-            pos_y = (altura + 10)
+    aberto = True
 
-    janela.fill(cor.Azul_Brilhante)
-    janela.blit(person, (pos_x, pos_y))
+    while aberto:
+        pygame.time.delay(50)
 
-    pygame.display.update()
+        for event in pygame.event.get():
 
-pygame.quit()
+            if event.type == pygame.QUIT:
+                aberto = False
+
+        comandos = pygame.key.get_pressed()
+
+        if comandos[pygame.K_DOWN]:
+            pos_y += velocidade
+            m = 0
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_UP]:
+            pos_y -= velocidade
+            m = 1
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_LEFT]:
+            pos_x -= velocidade
+            m = 2
+            n += 1
+            if n > 3:
+                n = 0
+
+        if comandos[pygame.K_RIGHT]:
+            pos_x += velocidade
+            m = 3
+            n += 1
+            if n > 3:
+                n = 0
+
+
+
+        if pos_x >= (largura + 10):
+            pos_x = -50
+        else:
+            if pos_x <= -50:
+                pos_x = (largura + 10)
+
+        if pos_y >= (altura + 10):
+            pos_y = -80
+        else:
+            if pos_y <= -80:
+                pos_y = (altura + 10)
+
+        janela.fill(cor.Azul_Brilhante)
+        janela.blit(estudante.estudante[m][n], (pos_x, pos_y))
+        janela.blit(voltar, (10, 10))
+
+        pygame.display.update()
+
+    pygame.quit()
